@@ -79,7 +79,7 @@ Route::localized(function () {
 The routes defined in the `Route::localized` closure are automatically registered for each configured locale. This will prepend the locale to the route's URI and name.
 
 If you set the `register-unprefixed-routes` option in your config file to `true`, unprefixed routes are also registered.
-Those routes are treated as non localized routes and a redirect will be triggered if the locale of a localized route matches the app default locale. 
+Those routes are treated as non-localized routes and a redirect will be triggered if the locale of a localized route matches the app default locale. 
 
 | URI               | Name                   |
 | ----------------- | ---------------------- |
