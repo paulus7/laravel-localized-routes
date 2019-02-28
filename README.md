@@ -77,9 +77,9 @@ Route::localized(function () {
 ```
 
 The routes defined in the `Route::localized` closure are automatically registered for each configured locale. This will prepend the locale to the route's URI and name.
-If you set the `register-unprefixed-routes` option in your config file to true, the unprefixed / non localized routes are also registered.
 
-In the above example, with the `register-unprefixed-routes` option set to true, there are 6 routes registered:
+If you set the `register-unprefixed-routes` option in your config file to `true`, unprefixed routes are also registered.
+Those routes are treated as non localized routes and a redirect will be triggered if the locale of a localized route matches the app default locale. 
 
 | URI               | Name                   |
 | ----------------- | ---------------------- |
@@ -89,6 +89,9 @@ In the above example, with the `register-unprefixed-routes` option set to true, 
 | /nl/about         | nl.about               |
 | /en/admin/reports | en.admin.reports.index |
 | /nl/admin/reports | nl.admin.reports.index |
+
+In the above example, with the `register-unprefixed-routes` option set to `true`, there are 6 routes registered.
+Assuming `en` is the default locale, `/en/about` will redirect to `/about`. Same with `/en/admin/reports` to `/admin/reports`.
 
 ### Generate Route URL's
 
