@@ -37,12 +37,25 @@ php artisan vendor:publish --provider="CodeZero\LocalizedRoutes\LocalizedRoutesS
 
 You will now find a `localized-routes.php` file in the `config` folder.
 
-#### Configure Supported Locales
+#### Configuration
 
-Add any locales you wish to support to your published `config/localized-routes.php` file:
+Customize your published `config/localized-routes.php` file according to your wishes:
 
 ```php
-'supported-locales' => ['en', 'nl', 'fr'],
+    /**
+     * The locales you wish to support.
+     */
+    'supported-locales' => ['en', 'nl'],
+
+    /**
+     * If set to true the unprefixed routes are also registered.
+     */
+    'register-unprefixed-routes' => false,
+
+    /**
+     * If set to true the app locale is set to the locale from localized route.
+     */
+    'set-app-locale' => false,
 ```
 
 ## Register Routes
@@ -50,11 +63,6 @@ Add any locales you wish to support to your published `config/localized-routes.p
 Example:
 
 ```php
-// Not localized
-Route::get('home', HomeController::class.'@index')
-    ->name('home');
-
-// Localized
 Route::localized(function () {
 
     Route::get('about', AboutController::class.'@index')
@@ -68,11 +76,15 @@ Route::localized(function () {
 });
 ```
 
-In the above example there are 5 routes being registered. The routes defined in the `Route::localized` closure are automatically registered for each configured locale. This will prepend the locale to the route's URI and name.
+The routes defined in the `Route::localized` closure are automatically registered for each configured locale. This will prepend the locale to the route's URI and name.
+If you set the `register-unprefixed-routes` option in your config file to true, the unprefixed / non localized routes are also registered.
+
+In the above example, with the `register-unprefixed-routes` option set to true, there are 6 routes registered:
 
 | URI               | Name                   |
 | ----------------- | ---------------------- |
-| /home             | home                   |
+| /about            | about                  |
+| /admin/reports    | admin.reports.index    |
 | /en/about         | en.about               |
 | /nl/about         | nl.about               |
 | /en/admin/reports | en.admin.reports.index |

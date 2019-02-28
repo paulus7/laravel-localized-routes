@@ -37,11 +37,21 @@ class LocalizedRoutesMacroTest extends TestCase
         $names = $routes->pluck('action.as');
         $uris = $routes->pluck('uri');
 
-        $this->assertNotContains('route.name', $names);
+        if( Config::get('localized-routes.register-unprefixed-routes') ) {
+            $this->assertContains('route.name', $names);
+        } else {
+            $this->assertNotContains('route.name', $names);
+        }
+
         $this->assertContains('en.route.name', $names);
         $this->assertContains('nl.route.name', $names);
 
-        $this->assertNotContains('route', $uris);
+        if( Config::get('localized-routes.register-unprefixed-routes') ) {
+            $this->assertContains('route', $uris);
+        } else {
+            $this->assertNotContains('route', $uris);
+        }
+
         $this->assertContains('en/route', $uris);
         $this->assertContains('nl/route', $uris);
     }
@@ -60,11 +70,21 @@ class LocalizedRoutesMacroTest extends TestCase
         $names = $routes->pluck('action.as');
         $uris = $routes->pluck('uri');
 
-        $this->assertNotContains('home', $names);
+        if( Config::get('localized-routes.register-unprefixed-routes') ) {
+            $this->assertContains('home', $names);
+        } else {
+            $this->assertNotContains('home', $names);
+        }
+
         $this->assertContains('en.home', $names);
         $this->assertContains('nl.home', $names);
 
-        $this->assertNotContains('/', $uris);
+        if( Config::get('localized-routes.register-unprefixed-routes') ) {
+            $this->assertContains('/', $uris);
+        } else {
+            $this->assertNotContains('/', $uris);
+        }
+
         $this->assertContains('en', $uris);
         $this->assertContains('nl', $uris);
     }
@@ -77,8 +97,13 @@ class LocalizedRoutesMacroTest extends TestCase
         $this->assertEquals('en', App::getLocale());
 
         Route::localized(function () {
-            $this->assertEquals('nl', App::getLocale());
+            Route::get('myroute', function () {})
+                ->name('myroute.name');
         });
+
+        $names = $this->getRoutes()->pluck('action.as');
+
+        $this->assertContains('nl.myroute.name', $names);
 
         $this->assertEquals('en', App::getLocale());
     }
