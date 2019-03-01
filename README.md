@@ -42,20 +42,20 @@ You will now find a `localized-routes.php` file in the `config` folder.
 Customize your published `config/localized-routes.php` file according to your wishes:
 
 ```php
-    /**
-     * The locales you wish to support.
-     */
-    'supported-locales' => ['en', 'nl'],
+/**
+ * The locales you wish to support.
+ */
+'supported-locales' => ['en', 'nl'],
 
-    /**
-     * If set to true the unprefixed routes are also registered.
-     */
-    'register-unprefixed-routes' => false,
+/**
+ * If set to a supported locale, unprefixed routes for this locale are also registered.
+ */
+'register-unprefixed-routes-for-locale' => 'en',
 
-    /**
-     * If set to true the app locale is set to the locale from localized route.
-     */
-    'set-app-locale' => false,
+/**
+ * If set to true the app locale is set to the locale from localized route.
+ */
+'set-app-locale' => false,
 ```
 
 ## Register Routes
@@ -78,8 +78,8 @@ Route::localized(function () {
 
 The routes defined in the `Route::localized` closure are automatically registered for each configured locale. This will prepend the locale to the route's URI and name.
 
-If you set the `register-unprefixed-routes` option in your config file to `true`, unprefixed routes are also registered.
-Those routes are treated as non-localized routes and a redirect will be triggered if the locale of a localized route matches the app default locale. 
+If you set the `register-unprefixed-routes` option in your config file to a supported locale, unprefixed routes are also registered.
+Those routes are treated as non-localized routes and a redirect will be triggered if the locale of a localized route matches the defined locale. 
 
 | URI               | Name                   |
 | ----------------- | ---------------------- |
@@ -90,8 +90,8 @@ Those routes are treated as non-localized routes and a redirect will be triggere
 | /en/admin/reports | en.admin.reports.index |
 | /nl/admin/reports | nl.admin.reports.index |
 
-In the above example, with the `register-unprefixed-routes` option set to `true`, there are 6 routes registered.
-Assuming `en` is the default locale, `/en/about` will redirect to `/about`. Same with `/en/admin/reports` to `/admin/reports`.
+In the above example, with the `register-unprefixed-routes` option set to `en`, there are 6 routes registered.
+The URI `/en/about` will redirect to `/about`. Same with `/en/admin/reports` to `/admin/reports`.
 
 ### Generate Route URL's
 

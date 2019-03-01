@@ -23,7 +23,7 @@ class LocalizedRoutesMacro
 
             $locales = Config::get('localized-routes.supported-locales', []);
 
-            if( Config::get('localized-routes.register-unprefixed-routes') ) {
+            if (in_array(Config::get('localized-routes.register-unprefixed-routes-for-locale'), $locales)) {
                 // Register unprefixed / non localized routes
                 $callback();
             }

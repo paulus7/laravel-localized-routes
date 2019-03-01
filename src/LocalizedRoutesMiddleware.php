@@ -18,24 +18,24 @@ class LocalizedRoutesMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if( Config::get('localized-routes.register-unprefixed-routes') ) {
+        if (Config::get('localized-routes.register-unprefixed-routes-for-locale')) {
 
-            // Redirect to unprefixed route if the locale from localized route matches default locale
+            // Redirect to unprefixed route if the locale from localized route matches defined locale
 
-            $locale = substr($request->route()->getPrefix(), 1);
+            $locale = trim($request->route()->getPrefix(), '/');
 
-            if( $locale == Config::get('app.locale') && in_array($locale, Config::get('localized-routes.supported-locales', [])) ) {
+            if ($locale === Config::get('localized-routes.register-unprefixed-routes-for-locale') && in_array($locale, Config::get('localized-routes.supported-locales', []))) {
                 return Redirect::route(substr($request->route()->getName(), strlen($locale)+1));
             }
         }
 
-        if( Config::get('localized-routes.set-app-locale') ) {
+        if (Config::get('localized-routes.set-app-locale')) {
 
             // Set app locale to the locale from localized route
 
-            $locale = substr($request->route()->getPrefix(), 1);
+            $locale = trim($request->route()->getPrefix(), '/');
 
-            if( in_array($locale, Config::get('localized-routes.supported-locales', [])) ) {
+            if (in_array($locale, Config::get('localized-routes.supported-locales', []))) {
                 App::setLocale($locale);
             }
         }

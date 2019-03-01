@@ -8,9 +8,9 @@ return [
     'supported-locales' => [],
 
     /**
-     * If set to true the unprefixed routes are also registered.
+     * If set to a supported locale, unprefixed routes for this locale are also registered.
      */
-    'register-unprefixed-routes' => false,
+    'register-unprefixed-routes-for-locale' => false,
 
     /**
      * If set to true the app locale is set to the locale from localized route.

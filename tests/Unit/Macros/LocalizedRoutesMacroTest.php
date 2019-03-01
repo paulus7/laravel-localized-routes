@@ -37,7 +37,7 @@ class LocalizedRoutesMacroTest extends TestCase
         $names = $routes->pluck('action.as');
         $uris = $routes->pluck('uri');
 
-        if( Config::get('localized-routes.register-unprefixed-routes') ) {
+        if (Config::get('localized-routes.register-unprefixed-routes-for-locale')) {
             $this->assertContains('route.name', $names);
         } else {
             $this->assertNotContains('route.name', $names);
@@ -46,7 +46,7 @@ class LocalizedRoutesMacroTest extends TestCase
         $this->assertContains('en.route.name', $names);
         $this->assertContains('nl.route.name', $names);
 
-        if( Config::get('localized-routes.register-unprefixed-routes') ) {
+        if (Config::get('localized-routes.register-unprefixed-routes-for-locale')) {
             $this->assertContains('route', $uris);
         } else {
             $this->assertNotContains('route', $uris);
@@ -70,7 +70,7 @@ class LocalizedRoutesMacroTest extends TestCase
         $names = $routes->pluck('action.as');
         $uris = $routes->pluck('uri');
 
-        if( Config::get('localized-routes.register-unprefixed-routes') ) {
+        if (Config::get('localized-routes.register-unprefixed-routes-for-locale')) {
             $this->assertContains('home', $names);
         } else {
             $this->assertNotContains('home', $names);
@@ -79,7 +79,7 @@ class LocalizedRoutesMacroTest extends TestCase
         $this->assertContains('en.home', $names);
         $this->assertContains('nl.home', $names);
 
-        if( Config::get('localized-routes.register-unprefixed-routes') ) {
+        if (Config::get('localized-routes.register-unprefixed-routes-for-locale')) {
             $this->assertContains('/', $uris);
         } else {
             $this->assertNotContains('/', $uris);

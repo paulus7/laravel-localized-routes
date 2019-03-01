@@ -37,6 +37,11 @@ class UrlGenerator extends BaseUrlGenerator
         // If the route exists and we're not requesting a translation,
         // let the base class resolve the route.
         if (Route::has($name) && $locale === null) {
+            $defaultLocale = Config::get('localized-routes.register-unprefixed-routes-for-locale');
+            $locale = App::getLocale();
+            if($defaultLocale && $defaultLocale !== $locale && Route::has("{$locale}.{$name}")) {
+                $name = "{$locale}.{$name}";
+            }
             return parent::route($name, $parameters, $absolute);
         }
 
